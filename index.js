@@ -8,7 +8,7 @@ app.use(express.static('public'));
 
 // sendFile will go here
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/../Pages/index.html'));
+  res.sendFile(path.join(__dirname, '/Pages/index.html'));
 });
 app.get('/test', function(req, res) {
   res.sendFile(path.join(__dirname, '/pages/test.html'));
