@@ -83,7 +83,7 @@
           <div class="row">
             <div class="col col-12 d-flex align-items-center justify-content-center">
               <model-viewer style="background-color: rgba(172, 167, 167, 0.5); min-height: 75vh; width: 100%;" ar
-                src="../trustisues_rectangle_male.glb" autoplay ar ar-modes="webxr scene-viewer" scale="0.2 0.2 0.2"
+              src="../trustisues_invtriangle_male.glb" autoplay ar ar-modes="webxr scene-viewer" scale="0.2 0.2 0.2"
                 shadow-intensity="1" touch-action="pan-y" alt="3d model Faradise" auto-rotate camera-controls
                 background-color="#ffffff"></model-viewer>
             </div>
@@ -103,7 +103,7 @@
           </div>
           <div id="body-types" class="row d-flex flex-row align-items-center justify-content-center mt-1"
             data-aos="zoom-in" data-aos-delay="150">
-            <span style="flex:1;" class="icon-box selected" data-body-type="rectangle">
+            <span style="flex:1;" class="icon-box" data-body-type="rectangle">
               <i class="bi-person-fill"></i>
             </span>
             <span style="flex:1;" class="icon-box" data-body-type="oval">
@@ -112,7 +112,7 @@
             <span style="flex:1;" class="icon-box" data-body-type="triangle">
               <i class="bi-person-fill"></i>
             </span>
-            <span style="flex:1;" class="icon-box" data-body-type="invtriangle">
+            <span style="flex:1;" class="icon-box selected" data-body-type="invtriangle">
               <i class="bi-person-fill"></i>
             </span>
           </div>
@@ -227,7 +227,6 @@
             var viwer = document.querySelector('model-viewer');
 
             viwer.setAttribute('src', `../${cloth}_${type}_${gender}.glb`);
-
           }
         });
       }
