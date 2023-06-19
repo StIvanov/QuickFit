@@ -41,6 +41,10 @@
       max-width: 5rem;
       padding: 0.3rem;
     }
+
+    .icon-box1.selected {
+      border: 1px solid #ffc451;
+    }
   </style>
 </head>
 
@@ -78,46 +82,48 @@
         <div class="col-lg-6" data-aos="fade-right">
           <div class="row">
             <div class="col col-12 d-flex align-items-center justify-content-center">
-              <model-viewer style="background-color: rgba(172, 167, 167, 0.5); min-height: 75vh; width: 100%;" ar src="../toshko_brown_hoodie.glb" autoplay ar
-                ar-modes="webxr scene-viewer" scale="0.2 0.2 0.2" shadow-intensity="1" touch-action="pan-y"
-                alt="3d model Faradise" auto-rotate camera-controls background-color="#ffffff"></model-viewer>
+              <model-viewer style="background-color: rgba(172, 167, 167, 0.5); min-height: 75vh; width: 100%;" ar
+                src="../trustisues_rectangle_male.glb" autoplay ar ar-modes="webxr scene-viewer" scale="0.2 0.2 0.2"
+                shadow-intensity="1" touch-action="pan-y" alt="3d model Faradise" auto-rotate camera-controls
+                background-color="#ffffff"></model-viewer>
             </div>
           </div>
         </div>
         <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
           <div class="mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150" style="text-align: left;">
             <h3 id="gender-list" style="color: #ffde9e;">Gender
-              <span class="btn-round selected">
+              <span class="btn-round selected" data-gender="male">
                 <i class="bi-gender-male"></i>
               </span>
-              <span class="btn-round">
+              <span class="btn-round" data-gender="female">
                 <i class="bi-gender-female"></i>
               </span>
             </h3>
             <h3 style="color: #ffde9e;">Body type</h3>
           </div>
-          <div class="row d-flex flex-row align-items-center justify-content-center mt-1" data-aos="zoom-in"
-            data-aos-delay="150">
-            <div style="flex:1;" class="icon-box" data-body-type="rectangle">
+          <div id="body-types" class="row d-flex flex-row align-items-center justify-content-center mt-1"
+            data-aos="zoom-in" data-aos-delay="150">
+            <span style="flex:1;" class="icon-box selected" data-body-type="rectangle">
               <i class="bi-person-fill"></i>
-            </div>
-            <div style="flex:1;" class="icon-box" data-body-type="oval">
+            </span>
+            <span style="flex:1;" class="icon-box" data-body-type="oval">
               <i class="bi-person-fill"></i>
-            </div>
-            <div style="flex:1;" class="icon-box" data-body-type="triangle">
+            </span>
+            <span style="flex:1;" class="icon-box" data-body-type="triangle">
               <i class="bi-person-fill"></i>
-            </div>
-            <div style="flex:1;" class="icon-box" data-body-type="invtriangle">
+            </span>
+            <span style="flex:1;" class="icon-box" data-body-type="invtriangle">
               <i class="bi-person-fill"></i>
-            </div>
+            </span>
           </div>
           <div class="mt-3" data-aos="zoom-in" data-aos-delay="150">
             <h3 style="color: #ffde9e;">Clothes</h3>
           </div>
-          <div class="row d-flex flex-wrap flex-row align-items-center mt-1" data-aos="zoom-in" data-aos-delay="150">
-            <div style="flex:1;" class="icon-box1">
+          <div id="clothes" class="row d-flex flex-wrap flex-row align-items-center mt-1" data-aos="zoom-in"
+            data-aos-delay="150">
+            <span style="flex:1;" class="icon-box1 selected" data-cloth="trustisues">
               <img src="mostra.jpg" alt="Description of the image" class="img-fluid">
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -134,7 +140,7 @@
             <img src="assets/img/about.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content" data-aos="fade-right" data-aos-delay="100">
-            <h3>About QuickFit</h3>
+            <h3>About us</h3>
 
             <p class="fst-italic">
               <strong>QuickFit</strong> is a virtual fitting room integratable with online clothing stores. We provide a
@@ -146,7 +152,7 @@
             <ul>
               <li><i class="ri-check-double-line"></i>Improve the online shoping experience.</li>
               <li><i class="ri-check-double-line"></i>Help customers to find clothes that fit well.</li>
-              <li><i class="ri-check-double-line"></i>Reduce waste of returned clothes.</li>
+              <li><i class="ri-check-double-line"></i>Reduce the number of returned orders.</li>
             </ul>
             <a href="#features" class="get-started-btn scrollto" style="color: black;">Learn more about us!</a>
           </div>
@@ -167,7 +173,7 @@
               <h3>QuickFit</h3>
               <p>
                 <strong>Phone:</strong> +359 886 639 267<br>
-                <strong>Email:</strong> <br>
+                <strong>Email:</strong> customer.help@quickfit.com<br>
               </p>
             </div>
           </div>
@@ -201,30 +207,38 @@
   <script src="assets/js/main.js"></script>
   <script>
     function __genderActions() {
-      document.querySelectorAll('#gender-list span').forEach(el => {
-        el.onclick = () => {
-          var selected = document.querySelector('#gender-list .btn-round.selected');
-          if (selected != null)
-            selected.classList.remove('selected');
+      var registerEvents = function (selection) {
+        document.querySelectorAll(selection).forEach(el => {
+          el.onclick = () => {
+            if (el.classList.contains('selected'))
+              return;
 
-          el.classList.add('selected');
-        }
-      });
+            var selected = document.querySelector(`${selection}.selected`);
+            if (selected != null)
+              selected.classList.remove('selected');
+
+            el.classList.add('selected');
+
+            var viewer = document.querySelector('model-viewer');
+
+            var gender = document.querySelector('#gender-list .btn-round.selected').getAttribute('data-gender');
+            var type = document.querySelector('#body-types .icon-box.selected').getAttribute('data-body-type');
+            var cloth = document.querySelector('#clothes .icon-box1.selected').getAttribute('data-cloth');
+            var viwer = document.querySelector('model-viewer');
+
+            viwer.setAttribute('src', `../${cloth}_${type}_${gender}.glb`);
+
+          }
+        });
+      }
+
+      registerEvents('#gender-list .btn-round');
+      registerEvents('#body-types .icon-box');
+      registerEvents('#clothes .icon-box1');
     }
     (function () {
       __genderActions();
-      document.querySelectorAll('[data-body-type]').forEach(el => {
-        el.onclick = ev => {
-          var type = el.getAttribute('data-body-type');
-          var viwer = document.querySelector('model-viewer');
-          if (type == '1') {
-            viwer.setAttribute('src', '../toshko_brown_hoodie.glb');
-          }
-          else if (type == '2') {
-            viwer.setAttribute('src', '../todor_trust_issues_final.glb');
-          }
-        };
-      });
+
     })();
   </script>
 </body>

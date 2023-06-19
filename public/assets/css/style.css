@@ -480,8 +480,13 @@ h6 {
 
 #hero .icon-box:hover {
   border-color: #ffc451;
+  cursor: pointer;
+  color: black;
+  background-color: #ffde9e;
 }
-
+#hero .icon-box.selected{
+  border-color: #ffc451;
+}
 @media (min-width: 1024px) {
   #hero {
     background-attachment: fixed;
@@ -1567,8 +1572,8 @@ section {
   background-color: #ffe4af;
   color: #5a3b00;
 }
-.btn-round:hover:not(.selected){
+.btn-round:hover{
   cursor: pointer;
-  background-color: #ffe4af;
-  color: white;
+  color: #5a3b00;
+  background-color: #fff5e2;
 }
